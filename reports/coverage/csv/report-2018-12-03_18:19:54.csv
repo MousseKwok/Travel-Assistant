@@ -1,0 +1,18 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+JaCoCo Ant Example,default,MainUIController.new EventHandler() {...},58,0,2,0,14,0,3,0,2,0
+JaCoCo Ant Example,default,MainUIController,529,0,6,0,116,0,11,0,8,0
+JaCoCo Ant Example,default,Spot,0,9,0,0,0,4,0,2,0,2
+JaCoCo Ant Example,default,DBClient,62,0,4,0,18,0,7,0,5,0
+JaCoCo Ant Example,default,GoogleMapsHandler,57,140,1,5,10,25,1,5,0,3
+JaCoCo Ant Example,default,ShortestRoute,3,157,0,18,1,37,1,10,1,1
+JaCoCo Ant Example,default,MainUIController.new ChangeListener() {...},37,0,5,0,12,0,6,0,2,0
+JaCoCo Ant Example,default,Recommendation,272,0,26,0,54,0,15,0,2,0
+JaCoCo Ant Example,default,AppInfo,8,0,0,0,4,0,3,0,3,0
+JaCoCo Ant Example,default,MainUIController.new ChangeListener() {...},23,0,2,0,5,0,3,0,2,0
+JaCoCo Ant Example,default,SpotsCollection,83,86,6,6,14,25,7,12,4,9
+JaCoCo Ant Example,default,SpotsCollectionTest,3,306,2,2,1,34,2,5,0,5
+JaCoCo Ant Example,default,LoginController,181,0,14,0,56,0,13,0,5,0
+JaCoCo Ant Example,default,ShortestRouteTest,1,304,1,1,0,32,1,3,0,3
+JaCoCo Ant Example,default,GoogleMapsHandlerTest,92,0,0,0,18,0,2,0,2,0
+JaCoCo Ant Example,default,MainUITest,143,0,0,0,36,0,6,0,6,0
+JaCoCo Ant Example,default,Main,37,0,0,0,11,0,3,0,3,0

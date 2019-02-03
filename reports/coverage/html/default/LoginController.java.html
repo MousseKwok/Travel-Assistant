@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">LoginController.java</span></div><h1>LoginController.java</h1><pre class="source lang-java linenums">import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import com.mongodb.client.MongoCollection;
+
+import org.bson.Document;
+
+import java.util.regex.Pattern;
+
+public class LoginController {
+	@FXML
+	private Label lblStatus;
+
+	@FXML
+	private AnchorPane loginpane;
+
+	@FXML
+	private TextField txtUsername;
+
+	@FXML
+	private TextField txtPassword;
+
+	private MongoCollection&lt;Document&gt; users;
+
+<span class="fc" id="L29">	public LoginController() {</span>
+<span class="fc" id="L30">        users = DBClient.getCollectionByName(&quot;users&quot;);</span>
+<span class="fc" id="L31">	}</span>
+
+	public Boolean isValidInput(String username, String pw) {
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">		boolean usernameValid = (!username.contains(&quot; &quot;)) &amp;&amp; (!username.contains(&quot;\t&quot;))</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">				&amp;&amp; (username.length() != 0);</span>
+<span class="fc" id="L36">		boolean passwordValid = Pattern.compile(&quot;\\S&quot;).matcher(pw).find();</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">		if (! usernameValid || ! passwordValid) {</span>
+<span class="fc" id="L38">			return false;</span>
+		}
+<span class="fc" id="L40">		return true;</span>
+	}
+
+	public void signup() {
+ 		try {
+<span class="fc" id="L45">			String username = txtUsername.getText();</span>
+<span class="fc" id="L46">			String pw = txtPassword.getText();</span>
+
+<span class="fc" id="L48">			Document user = DBClient.getUser(users, username);</span>
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			if (user != null) {</span>
+				// user exists
+<span class="fc" id="L52">				lblStatus.setText(&quot;Username taken, please choose a new one.&quot;);</span>
+			}
+
+			// validator
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			else if (!isValidInput(username, pw)) {</span>
+<span class="fc" id="L57">				lblStatus.setText(&quot;Username and/or password is not valid.\nPlease try again&quot;);</span>
+<span class="fc" id="L58">				return;</span>
+			}
+
+			else {
+				// create new user document
+<span class="nc" id="L63">				user = new Document(&quot;username&quot;, username)</span>
+<span class="nc" id="L64">	                .append(&quot;password&quot;, pw);</span>
+
+<span class="nc" id="L66">                users.insertOne(user);</span>
+<span class="nc" id="L67">                lblStatus.setText(&quot;Registration success! Signin to continue.&quot;);</span>
+			}
+
+<span class="fc" id="L70">			txtUsername.clear();</span>
+<span class="fc" id="L71">			txtPassword.clear();</span>
+		}
+<span class="nc" id="L73">		catch (Exception e) {</span>
+<span class="nc" id="L74">			System.out.println(e.toString());</span>
+<span class="fc" id="L75">		}</span>
+<span class="fc" id="L76">	}</span>
+
+	public void login() {
+		try {
+<span class="fc" id="L80">			String username = txtUsername.getText();</span>
+<span class="fc" id="L81">			String pw = txtPassword.getText();</span>
+
+<span class="fc" id="L83">			int status = this.authenticate(username, pw);</span>
+
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">			switch(status)</span>
+			{
+				case 0:
+<span class="fc" id="L88">					lblStatus.setText(&quot;Invalid username/password!&quot;);</span>
+<span class="fc" id="L89">					break;</span>
+
+				case 1:
+<span class="fc" id="L92">					lblStatus.setText(&quot;Login success!&quot;);</span>
+<span class="fc" id="L93">					AppInfo.setCurUsrName(username);</span>
+<span class="fc" id="L94">					this.displayApp();</span>
+<span class="fc" id="L95">					break;</span>
+
+				case -1:
+<span class="fc" id="L98">					lblStatus.setText(&quot;User does not exist! Sign up first&quot;);</span>
+					break;
+			}
+		}
+<span class="nc" id="L102">		catch (Exception e) {</span>
+<span class="nc" id="L103">			System.out.println(e.toString());</span>
+<span class="fc" id="L104">		}</span>
+		
+<span class="fc" id="L106">	}</span>
+
+	public int authenticate(String username, String password) {
+		try {
+			// fetch remote username and password
+<span class="fc" id="L111">			Document user = DBClient.getUser(users, username);</span>
+
+			// handle no user
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (user == null) {</span>
+<span class="fc" id="L115">				return -1;</span>
+			}
+
+			// compare
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			else if (password.equals(user.get(&quot;password&quot;))) {</span>
+<span class="fc" id="L120">				return 1;</span>
+			}
+
+		}
+<span class="nc" id="L124">		catch (Exception e) {</span>
+<span class="nc" id="L125">			System.out.println(e.toString());</span>
+<span class="fc" id="L126">		}</span>
+
+<span class="fc" id="L128">		return 0;</span>
+	}
+
+	private void displayApp() throws Exception {
+<span class="fc" id="L132">		Stage primaryStage = new Stage();</span>
+<span class="fc" id="L133">		Parent root = FXMLLoader.load(getClass().getResource(&quot;layout.fxml&quot;));</span>
+<span class="fc" id="L134">        primaryStage.setTitle(&quot;TravelAssistant&quot;);</span>
+<span class="fc" id="L135">        primaryStage.setScene(new Scene(root));</span>
+<span class="fc" id="L136">        primaryStage.show();</span>
+<span class="fc" id="L137">        loginpane.getScene().getWindow().hide();</span>
+        //now.close();
+<span class="fc" id="L139">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

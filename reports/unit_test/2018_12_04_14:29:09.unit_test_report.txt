@@ -1,0 +1,62 @@
+Buildfile: /Users/Jerry/Desktop/ase_project/Travel-Assistant/build.xml
+
+compile:
+
+test-compile:
+    [javac] Compiling 6 source files to /Users/Jerry/Desktop/ase_project/Travel-Assistant/bin
+
+test:
+[jacoco:coverage] Enhancing junit with coverage
+    [junit] Running LoginControllerTest
+    [junit] Testsuite: LoginControllerTest
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.792 sec
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.792 sec
+    [junit] 
+    [junit] ------------- Standard Error -----------------
+    [junit] Dec 04, 2018 2:29:11 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Cluster created with settings {hosts=[ds117592.mlab.com:17592], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+    [junit] ------------- ---------------- ---------------
+    [junit] Running RecommendationTest
+    [junit] Testsuite: RecommendationTest
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.123 sec
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.123 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] print current document: Document{{_id=5c064ebf97ab9f5c1cd3490f, username=Xijie, trip=[Columbia University, Chinatown, Central Park]}}
+    [junit] print current document: Document{{_id=5c06507597ab9f5c2c6ec879, username=Xijie, trip=[Columbia University, 108 Food Dried Hot Pot, Chinatown]}}
+    [junit] print current document: Document{{_id=5c0650f197ab9f5c315293a4, username=Xijie, trip=[Columbia University, The Museum of Modern Art, Chinatown]}}
+    [junit] print current document: Document{{_id=5c06514097ab9f5c352f7453, username=Xijie, trip=[Columbia University, The Museum of Modern Art, Chinatown, Newport]}}
+    [junit] print current document: Document{{_id=5c06516297ab9f5c387eadea, username=Xijie, trip=[Columbia University, Newport, Boston University]}}
+    [junit] print current document: Document{{_id=5c06518c97ab9f5c3c36cbce, username=Xijie, trip=[Columbia University, New York University, Harvard University]}}
+    [junit] print current document: Document{{_id=5c0651b497ab9f5c3f793487, username=Xijie, trip=[Columbia University, 108 Food Dried Hot Pot, Bow Tie Cinemas]}}
+    [junit] print current document: Document{{_id=5c0651f297ab9f5c42cac5ad, username=Danny, trip=[Columbia Avenue, The Museum of Modern Art, The Metropolitan Museum of Art]}}
+    [junit] times: 4
+    [junit] list of spots: [Chinatown]
+    [junit] times: 3
+    [junit] list of spots: [The Museum of Modern Art]
+    [junit] times: 2
+    [junit] list of spots: [108 Food Dried Hot Pot, Newport]
+    [junit] Added spots: Chinatown
+    [junit] Added spots: The Museum of Modern Art
+    [junit] Added spots: 108 Food Dried Hot Pot
+    [junit] ------------- ---------------- ---------------
+    [junit] ------------- Standard Error -----------------
+    [junit] Dec 04, 2018 2:29:12 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Cluster created with settings {hosts=[ds117592.mlab.com:17592], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+    [junit] Dec 04, 2018 2:29:12 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: No server chosen by ReadPreferenceServerSelector{readPreference=primary} from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, serverDescriptions=[ServerDescription{address=ds117592.mlab.com:17592, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+    [junit] Dec 04, 2018 2:29:13 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Opened connection [connectionId{localValue:1, serverValue:200418}] to ds117592.mlab.com:17592
+    [junit] Dec 04, 2018 2:29:13 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Monitor thread successfully connected to server with description ServerDescription{address=ds117592.mlab.com:17592, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 6, 6]}, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, roundTripTimeNanos=10344962, setName='rs-ds117592', canonicalAddress=ds117592-a.mlab.com:17592, hosts=[ds117592-a.mlab.com:17592], passives=[], arbiters=[], primary='ds117592-a.mlab.com:17592', tagSet=TagSet{[]}, electionId=7fffffff0000000000000006, setVersion=1, lastWriteDate=Tue Dec 04 14:29:06 EST 2018, lastUpdateTimeNanos=194547291667579}
+    [junit] Dec 04, 2018 2:29:13 PM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Opened connection [connectionId{localValue:2, serverValue:200419}] to ds117592.mlab.com:17592
+    [junit] ------------- ---------------- ---------------
+    [junit] Running ShortestRouteTest
+    [junit] Testsuite: ShortestRouteTest
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 sec
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 sec
+    [junit] 
+
+BUILD SUCCESSFUL
+Total time: 4 seconds

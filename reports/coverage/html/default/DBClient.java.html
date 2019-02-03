@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">DBClient.java</span></div><h1>DBClient.java</h1><pre class="source lang-java linenums">import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoCollection;
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L11">public class DBClient {</span>
+    private static final String URI = &quot;mongodb://4for4:4for4!@ds117592.mlab.com:17592/4for4&quot;;
+    private static MongoDatabase dbInstance;
+
+    public static synchronized MongoDatabase getDatabase() {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (dbInstance == null) {</span>
+<span class="fc" id="L17">            MongoClientURI uri  = new MongoClientURI(URI);</span>
+<span class="fc" id="L18">            MongoClient client = new MongoClient(uri);</span>
+<span class="fc" id="L19">            dbInstance = client.getDatabase(uri.getDatabase());</span>
+        }
+<span class="fc" id="L21">        return dbInstance;</span>
+    }
+
+    public static Document getUser(MongoCollection&lt;Document&gt; users, String username) throws Exception {
+<span class="fc" id="L25">		Document findQuery = new Document(&quot;username&quot;, username);</span>
+<span class="fc" id="L26">		MongoCursor&lt;Document&gt; cursor = users.find(findQuery).iterator();</span>
+
+<span class="fc" id="L28">		Document doc = null;</span>
+
+	 	try {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            while (cursor.hasNext()) {</span>
+<span class="fc" id="L32">            	doc = cursor.next();</span>
+            }
+
+        } finally {
+<span class="fc" id="L36">            cursor.close();</span>
+        }
+
+<span class="fc" id="L39">        return doc;</span>
+	}
+
+	public static MongoCollection&lt;Document&gt; getCollectionByName(String colName) {
+<span class="fc" id="L43">        return DBClient.getDatabase().getCollection(colName);</span>
+    }
+
+    public static List&lt;String&gt; getDocuments(MongoCollection&lt;Document&gt; collection, String username) {
+<span class="fc" id="L47">        List&lt;String&gt; docList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L48">        BasicDBObject query = new BasicDBObject(&quot;username&quot;, new BasicDBObject(&quot;$eq&quot;, username));</span>
+<span class="fc" id="L49">        MongoCursor&lt;Document&gt; cursor = collection.find(query).iterator();</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        while (cursor.hasNext()) {</span>
+<span class="fc" id="L52">            Document curDoc = cursor.next();</span>
+<span class="fc" id="L53">            ArrayList&lt;String&gt; curTrip = (ArrayList&lt;String&gt;) curDoc.get(&quot;trip&quot;);</span>
+
+<span class="fc" id="L55">            StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (String s : curTrip) {</span>
+<span class="fc" id="L58">                sb.append(s);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                if (curTrip.indexOf(s) != curTrip.size() - 1)</span>
+<span class="fc" id="L60">                    sb.append(&quot;-&gt;&quot;);</span>
+<span class="fc" id="L61">            }</span>
+
+<span class="fc" id="L63">            docList.add(sb.toString());</span>
+<span class="fc" id="L64">        }</span>
+<span class="fc" id="L65">        return docList;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

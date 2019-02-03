@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recommendation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Recommendation.java</span></div><h1>Recommendation.java</h1><pre class="source lang-java linenums">import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimaps;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+
+import java.util.*;
+
+import com.google.common.collect.Multimap;
+
+<span class="nc" id="L12">public class Recommendation {</span>
+
+    private static final int MAX_SPOTS_RECOMMENDED = 3;
+    private static List&lt;String&gt; res;
+
+    public static List&lt;String&gt; getRecommendedSpots(String collectionName, String curUsrName) {
+<span class="fc" id="L18">        res = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L20">        MongoCollection&lt;Document&gt; trips = DBClient.getCollectionByName(collectionName);</span>
+
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (trips.count() &lt;= 5)</span>
+<span class="fc" id="L23">            return res;</span>
+
+<span class="fc" id="L25">        BasicDBObject neQuery = new BasicDBObject();</span>
+<span class="fc" id="L26">        neQuery.put(&quot;username&quot;, new BasicDBObject(&quot;$ne&quot;, curUsrName));</span>
+<span class="fc" id="L27">        MongoCursor&lt;Document&gt; cursor = trips.find(neQuery).iterator();</span>
+
+<span class="fc" id="L29">        Map&lt;String, Integer&gt; spotMap = new HashMap&lt;&gt;();</span>
+
+        try {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            while (cursor.hasNext()) {</span>
+<span class="fc" id="L33">                Document curDoc = cursor.next();</span>
+<span class="fc" id="L34">                System.out.println(&quot;print current document: &quot; + curDoc);</span>
+<span class="fc" id="L35">                ArrayList&lt;String&gt; curTrip = (ArrayList&lt;String&gt;) curDoc.get(&quot;trip&quot;);</span>
+
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                for (int i = 1; i &lt; curTrip.size(); i++) {</span>
+<span class="fc" id="L38">                    String spot = curTrip.get(i);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                    if (spotMap.containsKey(spot))</span>
+<span class="fc" id="L40">                        spotMap.put(spot, spotMap.get(spot) + 1);</span>
+                    else
+<span class="fc" id="L42">                        spotMap.put(spot, 1);</span>
+                }
+<span class="fc" id="L44">            }</span>
+        }
+
+        finally {
+<span class="fc" id="L48">            cursor.close();</span>
+        }
+
+<span class="fc" id="L51">        Multimap&lt;Integer, String&gt; multimap = Multimaps.invertFrom(Multimaps.forMap(spotMap), HashMultimap.create());</span>
+
+<span class="fc" id="L53">        ArrayList&lt;Integer&gt; visitNum = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (Map.Entry&lt;Integer, Collection&lt;String&gt;&gt; entry : multimap.asMap().entrySet()) {</span>
+<span class="fc" id="L56">            visitNum.add(entry.getKey());</span>
+<span class="fc" id="L57">        }</span>
+
+<span class="fc" id="L59">        Collections.sort(visitNum);</span>
+
+<span class="fc" id="L61">        int size = Math.min(MAX_SPOTS_RECOMMENDED, spotMap.size());</span>
+
+<span class="fc" id="L63">        int times[] = new int[size];</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L66">            times[i] = visitNum.get(visitNum.size() - i - 1);</span>
+<span class="fc" id="L67">            System.out.println(&quot;times: &quot; + times[i]);</span>
+<span class="fc" id="L68">            System.out.println(&quot;list of spots: &quot; + multimap.get(times[i]));</span>
+        }
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (int i = 0; i &lt; times.length; i++) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            for (String s : multimap.get(times[i])) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                if (res.size() &lt; MAX_SPOTS_RECOMMENDED) {</span>
+<span class="fc" id="L74">                    System.out.println(&quot;Added spots: &quot; + s);</span>
+<span class="fc" id="L75">                    res.add(s);</span>
+                }
+                else
+                    break;
+<span class="fc" id="L79">            }</span>
+        }
+
+<span class="fc" id="L82">        return res;</span>
+    }
+
+    public static List&lt;String&gt; getRecommendationList() {
+<span class="fc" id="L86">        return res;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShortestRoute.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">ShortestRoute.java</span></div><h1>ShortestRoute.java</h1><pre class="source lang-java linenums">import java.util.List;
+import java.util.ArrayList;
+import java.util.Stack;
+
+/**
+ * @author Haoran Geng, Xijie Guo
+ * 
+ * Each time finding the min path along the nodes
+ * store the nodes into the stack
+ *
+ */
+<span class="nc" id="L12">public class ShortestRoute {</span>
+
+	public static List&lt;String&gt; findNearestNeighbor(SpotsCollection sc) {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">		if (!sc.isDistanceMatrixValid())</span>
+<span class="fc" id="L16">			return null;</span>
+
+<span class="fc" id="L18">		Double[][] distances = sc.getDistanceMatrix();</span>
+<span class="fc" id="L19">		List&lt;Spot&gt; spots = sc.getSpots();</span>
+<span class="fc" id="L20">		int numberOfNodes = sc.getNumSpots();</span>
+
+<span class="fc" id="L22">		Stack&lt;String&gt; stack = new Stack&lt;String&gt;();</span>
+<span class="fc" id="L23">		List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L24">		int[] visited = new int[numberOfNodes + 1];</span>
+<span class="fc" id="L25">		visited[0]= 1;</span>
+<span class="fc" id="L26">		int element = 0, dst = 0, i = 0;</span>
+<span class="fc" id="L27">		double min = Double.MAX_VALUE;</span>
+<span class="fc" id="L28">		boolean minFlag = false;</span>
+
+<span class="fc" id="L30">		stack.push(spots.get(0).getName());</span>
+<span class="fc" id="L31">		result.add(spots.get(0).getName());</span>
+
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		while(!stack.isEmpty()) {</span>
+
+<span class="fc" id="L35">			String name = stack.peek();</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			for (Spot spot: spots) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">				if (spot.getName().equals(name))</span>
+<span class="fc" id="L38">					element = spots.indexOf(spot);</span>
+<span class="fc" id="L39">			}</span>
+
+<span class="fc" id="L41">			i = 0;</span>
+<span class="fc" id="L42">			min = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">			while(i &lt; numberOfNodes) {</span>
+<span class="fc bfc" id="L44" title="All 6 branches covered.">				if(distances[element][i] &gt; 1 &amp;&amp; visited[i] == 0 &amp;&amp; min &gt; distances[element][i]) {</span>
+<span class="fc" id="L45">					min  = distances[element][i];</span>
+<span class="fc" id="L46">					dst = i;</span>
+<span class="fc" id="L47">					minFlag = true;</span>
+				}
+<span class="fc" id="L49">				i++;</span>
+			}
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if(minFlag) {</span>
+<span class="fc" id="L52">				visited[dst] = 1;</span>
+<span class="fc" id="L53">				stack.push(spots.get(dst).getName());</span>
+<span class="fc" id="L54">				result.add(spots.get(dst).getName());</span>
+<span class="fc" id="L55">				minFlag = false;</span>
+<span class="fc" id="L56">				continue;</span>
+			}
+<span class="fc" id="L58">			stack.pop();</span>
+<span class="fc" id="L59">		}</span>
+
+<span class="fc" id="L61">		return result;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

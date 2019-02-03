@@ -1,0 +1,156 @@
+Buildfile: /Users/Jerry/Desktop/ase_project/Travel-Assistant/build.xml
+
+compile:
+
+test-compile:
+    [javac] Compiling 6 source files to /Users/Jerry/Desktop/ase_project/Travel-Assistant/bin
+
+test:
+[jacoco:coverage] Enhancing junit with coverage
+    [junit] Running GoogleMapsHandlerTest
+    [junit] Testsuite: GoogleMapsHandlerTest
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.51 sec
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.51 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] 3.1
+    [junit] 77.0
+    [junit] 3.4
+    [junit] 24.0
+    [junit] 3.6
+    [junit] 28.0
+    [junit] 3.4
+    [junit] 34.0
+    [junit] ------------- ---------------- ---------------
+    [junit] Running LoginControllerTest
+    [junit] Testsuite: LoginControllerTest
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.553 sec
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.553 sec
+    [junit] 
+    [junit] ------------- Standard Error -----------------
+    [junit] Dec 16, 2018 8:44:19 AM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Cluster created with settings {hosts=[ds117592.mlab.com:17592], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+    [junit] ------------- ---------------- ---------------
+    [junit] Running MainUITest
+    [junit] Testsuite: MainUITest
+    [junit] 2018-12-16 08:44:23.123 java[36707:4320749] pid(36707)/euid(501) is calling TIS/TSM in non-main thread environment, ERROR : This is NOT allowed. Please call TIS/TSM in main thread!!!
+    [junit] Tests run: 13, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 104.673 sec
+    [junit] Tests run: 13, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 104.673 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] print current document: Document{{_id=5c05ab3a97ab9f51484e2112, username=Mousse, trip=[Columbia University, The Museum of Modern Art]}}
+    [junit] print current document: Document{{_id=5c05ab7d97ab9f51484e2113, username=Mousse, trip=[Central Park, Columbia University, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05abe097ab9f51484e2114, username=Kwok, trip=[Chinatown, World Trade Centers Association, 108 Food Dried Hot Pot, Columbia University]}}
+    [junit] print current document: Document{{_id=5c05ac8297ab9f515126ead0, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05acb497ab9f515126ead1, username=Kwok, trip=[Columbia University, 108 Food Dried Hot Pot, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05ad1997ab9f515126ead2, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, The Museum of Modern Art, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05ad6497ab9f515126ead3, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, The Museum of Modern Art, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05b71e97ab9f51fb7e7b70, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, Spot Dessert Bar]}}
+    [junit] print current document: Document{{_id=5c05b76b97ab9f51fb7e7b71, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, The Museum of Modern Art]}}
+    [junit] print current document: Document{{_id=5c05b948478543a0bd116604, username=lsk567, trip=[Columbia University, Rocco B. Commisso Soccer Stadium, The Metropolitan Museum of Art, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05b9ce478543a12c54dfb3, username=lsk567, trip=[Columbia University, Intrepid Sea, Air &amp; Space Museum, Chinatown]}}
+    [junit] print current document: Document{{_id=5c05df1797ab9f547be673b9, username=Danny, trip=[Columbia University, The Museum of Modern Art, Times Square]}}
+    [junit] print current document: Document{{_id=5c05df7a97ab9f547be673ba, username=Danny, trip=[Columbia University, The Museum of Modern Art]}}
+    [junit] print current document: Document{{_id=5c05e22497ab9f54cc510189, username=Mousse, trip=[Columbia University, The Museum of Modern Art, Chinatown, Newport]}}
+    [junit] print current document: Document{{_id=5c05e2e497ab9f54cc51018a, username=Mousse, trip=[Columbia University, Exchange Place, Boston University]}}
+    [junit] print current document: Document{{_id=5c05e37797ab9f54cc51018b, username=Mousse, trip=[Columbia University, 108 Food Dried Hot Pot, The Museum of Modern Art, New York University, Penguin Ice Cream, Boston University]}}
+    [junit] print current document: Document{{_id=5c05e3c597ab9f54cc51018c, username=123123, trip=[Columbia University, 108 Food Dried Hot Pot, Bow Tie Cinemas]}}
+    [junit] print current document: Document{{_id=5c06da35478543d768333bc6, username=zichuan, trip=[The Metropolitan Museum of Art, Jacob K. Javits Convention Center, The High Line, Columbia University]}}
+    [junit] print current document: Document{{_id=5c06e8b6478543dc054b566d, username=lsk567, trip=[One World Trade Center, 9/11 Memorial, Statue of Liberty National Monument, Columbia University]}}
+    [junit] print current document: Document{{_id=5c11059d065484af945950db, username=lsk567, trip=[Barclays Center, Statue of Liberty National Monument, Governors Island, Coney Island, New World Mall]}}
+    [junit] print current document: Document{{_id=5c114d94e784d4191834e3e7, username=321, trip=[Columbia University, The Museum of Modern Art, Times Square]}}
+    [junit] print current document: Document{{_id=5c145e1f71a1da02f87db33e, username=Mousse, trip=[Columbia University]}}
+    [junit] print current document: Document{{_id=5c15b7d871a1da0cdfbc6b47, username=Mousse, trip=[Columbia University, Central Park, The Museum of Modern Art, Empire State Building, SoHo]}}
+    [junit] print current document: Document{{_id=5c1655497236f38e5dad86b1, username=lsk567, trip=[Chinatown, DaDong, Columbia University]}}
+    [junit] times: 10
+    [junit] list of spots: [The Museum of Modern Art]
+    [junit] times: 9
+    [junit] list of spots: [108 Food Dried Hot Pot]
+    [junit] times: 8
+    [junit] list of spots: [Chinatown]
+    [junit] Added spots: The Museum of Modern Art
+    [junit] Added spots: 108 Food Dried Hot Pot
+    [junit] Added spots: Chinatown
+    [junit] Recommended spots: [The Museum of Modern Art, 108 Food Dried Hot Pot, Chinatown]
+    [junit] Spot List is Already Empty!
+    [junit] ------------------(40.8075355, -73.96257270000001)
+    [junit] [Columbia University]
+    [junit] ------------------
+    [junit] No specific spot information found! 
+    [junit] Please search again!
+    [junit] ------------------
+    [junit] No specific spot information found! 
+    [junit] Please search again!
+    [junit] Can not generate the route!
+    [junit] ------------------(40.8075355, -73.96257270000001)
+    [junit] [Columbia University]
+    [junit] ------------------(40.71575089999999, -73.99703069999998)
+    [junit] [Columbia University, Chinatown]
+    [junit] 13.7
+    [junit] 12.9
+    [junit] 111
+    [junit] ------------- ---------------- ---------------
+    [junit] ------------- Standard Error -----------------
+    [junit] Dec 16, 2018 8:44:21 AM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Cluster created with settings {hosts=[ds117592.mlab.com:17592], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+    [junit] Dec 16, 2018 8:44:21 AM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Opened connection [connectionId{localValue:1, serverValue:215653}] to ds117592.mlab.com:17592
+    [junit] Dec 16, 2018 8:44:21 AM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Monitor thread successfully connected to server with description ServerDescription{address=ds117592.mlab.com:17592, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 6, 6]}, minWireVersion=0, maxWireVersion=6, maxDocumentSize=16777216, roundTripTimeNanos=17956531, setName='rs-ds117592', canonicalAddress=ds117592-a.mlab.com:17592, hosts=[ds117592-a.mlab.com:17592], passives=[], arbiters=[], primary='ds117592-a.mlab.com:17592', tagSet=TagSet{[]}, electionId=7fffffff0000000000000006, setVersion=1, lastWriteDate=Sun Dec 16 08:44:19 EST 2018, lastUpdateTimeNanos=196265647734544}
+    [junit] Dec 16, 2018 8:44:24 AM com.mongodb.diagnostics.logging.JULLogger log
+    [junit] INFO: Opened connection [connectionId{localValue:2, serverValue:215654}] to ds117592.mlab.com:17592
+    [junit] ------------- ---------------- ---------------
+    [junit] Testcase: DeleteSpot(MainUITest):	FAILED
+    [junit] 
+    [junit] Expected: Labeled has text "Delete the last spot!"
+    [junit]      but: was "New location added!"
+    [junit] junit.framework.AssertionFailedError: 
+    [junit] Expected: Labeled has text "Delete the last spot!"
+    [junit]      but: was "New location added!"
+    [junit] 	at org.testfx.api.FxAssert.verifyThatImpl(FxAssert.java:185)
+    [junit] 	at org.testfx.api.FxAssert.verifyThat(FxAssert.java:80)
+    [junit] 	at MainUITest.DeleteSpot(MainUITest.java:144)
+    [junit] 
+    [junit] 
+    [junit] Testcase: AddSpot(MainUITest):	FAILED
+    [junit] 
+    [junit] Expected: Labeled has text "New location added!"
+    [junit]      but: was "No specific spot information found! 
+    [junit] Please search again!"
+    [junit] junit.framework.AssertionFailedError: 
+    [junit] Expected: Labeled has text "New location added!"
+    [junit]      but: was "No specific spot information found! 
+    [junit] Please search again!"
+    [junit] 	at org.testfx.api.FxAssert.verifyThatImpl(FxAssert.java:185)
+    [junit] 	at org.testfx.api.FxAssert.verifyThat(FxAssert.java:80)
+    [junit] 	at MainUITest.AddSpot(MainUITest.java:126)
+    [junit] 
+    [junit] 
+    [junit] Testcase: signupEmpty(MainUITest):	FAILED
+    [junit] 
+    [junit] Expected: Labeled has text "Username and/or password is not valid.
+    [junit] They should not be blank. Please try again"
+    [junit]      but: was "Username and/or password is not valid.
+    [junit] Please try again"
+    [junit] junit.framework.AssertionFailedError: 
+    [junit] Expected: Labeled has text "Username and/or password is not valid.
+    [junit] They should not be blank. Please try again"
+    [junit]      but: was "Username and/or password is not valid.
+    [junit] Please try again"
+    [junit] 	at org.testfx.api.FxAssert.verifyThatImpl(FxAssert.java:185)
+    [junit] 	at org.testfx.api.FxAssert.verifyThat(FxAssert.java:80)
+    [junit] 	at MainUITest.signupEmpty(MainUITest.java:73)
+    [junit] 
+    [junit] 
+    [junit] Testcase: signupSuccess(MainUITest):	FAILED
+    [junit] 
+    [junit] Expected: Labeled has text "Registration success! Signin to continue."
+    [junit]      but: was "Username taken, please choose a new one."
+    [junit] junit.framework.AssertionFailedError: 
+    [junit] Expected: Labeled has text "Registration success! Signin to continue."
+    [junit]      but: was "Username taken, please choose a new one."
+    [junit] 	at org.testfx.api.FxAssert.verifyThatImpl(FxAssert.java:185)
+    [junit] 	at org.testfx.api.FxAssert.verifyThat(FxAssert.java:80)
+    [junit] 	at MainUITest.signupSuccess(MainUITest.java:91)
+    [junit] 
+    [junit] 

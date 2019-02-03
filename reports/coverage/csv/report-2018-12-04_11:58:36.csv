@@ -1,0 +1,20 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+JaCoCo Coverage,default,MainUIController.new EventHandler() {...},54,0,2,0,11,0,3,0,2,0
+JaCoCo Coverage,default,MainUIController,573,0,10,0,128,0,13,0,8,0
+JaCoCo Coverage,default,Spot,0,9,0,0,0,4,0,2,0,2
+JaCoCo Coverage,default,DBClient,73,48,6,4,16,13,5,5,2,3
+JaCoCo Coverage,default,GoogleMapsHandler,191,0,6,0,33,0,6,0,3,0
+JaCoCo Coverage,default,ShortestRoute,3,157,0,18,1,37,1,10,1,1
+JaCoCo Coverage,default,MainUIController.new ChangeListener() {...},37,0,5,0,12,0,6,0,2,0
+JaCoCo Coverage,default,Recommendation,3,227,0,18,1,39,1,11,1,2
+JaCoCo Coverage,default,AppInfo,8,0,0,0,4,0,3,0,3,0
+JaCoCo Coverage,default,MainUIController.new ChangeListener() {...},23,0,2,0,5,0,3,0,2,0
+JaCoCo Coverage,default,SpotsCollection,83,86,6,6,14,25,7,12,4,9
+JaCoCo Coverage,default,SpotsCollectionTest,3,306,2,2,1,34,2,5,0,5
+JaCoCo Coverage,default,LoginController,139,44,11,5,43,14,10,5,3,3
+JaCoCo Coverage,default,LoginControllerTest,1,79,1,1,0,18,1,3,0,3
+JaCoCo Coverage,default,ShortestRouteTest,1,304,1,1,0,32,1,3,0,3
+JaCoCo Coverage,default,RecommendationTest,0,31,0,0,0,9,0,3,0,3
+JaCoCo Coverage,default,GoogleMapsHandlerTest,100,0,0,0,18,0,2,0,2,0
+JaCoCo Coverage,default,MainUITest,589,0,0,0,112,0,15,0,15,0
+JaCoCo Coverage,default,Main,37,0,0,0,11,0,3,0,3,0

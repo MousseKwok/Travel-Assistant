@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainUIController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MainUIController.java</span></div><h1>MainUIController.java</h1><pre class="source lang-java linenums">import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
+import javafx.stage.Stage;
+import org.bson.Document;
+
+import com.mongodb.client.MongoCollection;
+
+<span class="fc" id="L26">public class MainUIController {</span>
+
+<span class="fc" id="L28">    private SpotsCollection sc = new SpotsCollection();</span>
+<span class="fc" id="L29">    private List&lt;String&gt; listCompare = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L30">    private String spotInfo = &quot;&quot;;</span>
+<span class="fc" id="L31">    private String spotLatLng = &quot;&quot;;</span>
+    private List&lt;String&gt; spotList;
+    private List&lt;String&gt; history;
+
+<span class="fc" id="L35">    @FXML</span>
+    private ChoiceBox TimeorDistance = new ChoiceBox();
+
+<span class="fc" id="L38">    @FXML</span>
+    private Pane planpane = new Pane();
+
+    @FXML
+    private AnchorPane mainpane;
+
+<span class="fc" id="L44">    @FXML</span>
+    private ChoiceBox TravelMode = new ChoiceBox();
+
+<span class="fc" id="L47">    @FXML</span>
+    private Label text = new Label();
+
+<span class="fc" id="L50">    @FXML</span>
+    private Label welcome = new Label();
+
+<span class="fc" id="L53">    @FXML</span>
+    private Button save = new Button();
+
+<span class="fc" id="L56">    @FXML</span>
+    private Button add_location = new Button();
+
+<span class="fc" id="L59">    @FXML</span>
+    private Button delete = new Button();
+<span class="fc" id="L61">    @FXML</span>
+    private Button buttonGenerate = new Button();
+
+<span class="fc" id="L64">    @FXML</span>
+    private Pane algorithm = new Pane();
+
+    @FXML
+    private WebView htmlGmap;
+
+<span class="fc" id="L70">    @FXML</span>
+    private Button recommendButton = new Button();
+
+
+<span class="fc" id="L74">    @FXML</span>
+    private ListView&lt;String&gt; list = new ListView&lt;&gt;();
+
+<span class="fc" id="L77">    @FXML</span>
+    private ListView&lt;String&gt; plan_history = new ListView&lt;&gt;();
+
+<span class="fc" id="L80">    @FXML</span>
+    private ListView&lt;String&gt; recommendation = new ListView&lt;&gt;();
+
+    @FXML
+    protected void initialize(){
+<span class="fc" id="L85">        WebEngine webEngine = htmlGmap.getEngine();</span>
+<span class="fc" id="L86">        URL urlGoogleMaps = getClass().getResource(&quot;search.html&quot;);</span>
+<span class="fc" id="L87">        webEngine.load(urlGoogleMaps.toExternalForm());</span>
+<span class="fc" id="L88">        welcome.setText(&quot;Welcome, &quot; + AppInfo.getCurUsrName());</span>
+<span class="fc" id="L89">        planpane.setVisible(false);</span>
+        //progress.setVisible(false);
+<span class="fc" id="L91">        save.setVisible(false);</span>
+<span class="fc" id="L92">        history = DBClient.getDocuments(DBClient.getCollectionByName(&quot;trips&quot;),</span>
+<span class="fc" id="L93">                AppInfo.getCurUsrName());</span>
+<span class="fc" id="L94">        plan_history.getItems().add(&quot;* plan history *&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for(String each : history){</span>
+<span class="fc" id="L96">            plan_history.getItems().add(each);</span>
+<span class="fc" id="L97">        }</span>
+
+<span class="fc" id="L99">        TimeorDistance.setItems(FXCollections.observableArrayList(</span>
+                &quot;Time&quot;, &quot;Distance&quot;
+        ));
+<span class="fc" id="L102">        TimeorDistance.getSelectionModel().selectFirst();</span>
+<span class="fc" id="L103">        TimeorDistance.getSelectionModel().selectedIndexProperty().addListener(</span>
+<span class="fc" id="L104">                new ChangeListener&lt;Number&gt;() {</span>
+                    @Override
+                    public void changed(ObservableValue&lt;? extends Number&gt; observable, Number oldValue, Number newValue) {
+
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                        if (newValue.equals(0)){</span>
+<span class="nc" id="L109">                            sc.setDistance(false);</span>
+                        }
+                        else{
+<span class="fc" id="L112">                            sc.setDistance(true);</span>
+                        }
+
+<span class="fc" id="L115">                    }</span>
+                }
+        );
+<span class="fc" id="L118">        TravelMode.setItems(FXCollections.observableArrayList(</span>
+                &quot;Walking&quot;, &quot;Driving&quot;, &quot;Bicycling&quot;, &quot;Transit&quot;
+        ));
+<span class="fc" id="L121">        TravelMode.getSelectionModel().selectFirst();</span>
+<span class="fc" id="L122">        TravelMode.getSelectionModel().selectedIndexProperty().addListener(</span>
+<span class="fc" id="L123">                new ChangeListener&lt;Number&gt;() {</span>
+                    @Override
+                    public void changed(ObservableValue&lt;? extends Number&gt; observable, Number oldValue, Number newValue) {
+
+<span class="pc bpc" id="L127" title="2 of 5 branches missed.">                        switch (newValue.intValue()){</span>
+                            case 0:
+<span class="nc" id="L129">                                sc.setMode(&quot;walking&quot;);</span>
+<span class="nc" id="L130">                                break;</span>
+                            case 1:
+<span class="fc" id="L132">                                sc.setMode(&quot;driving&quot;);</span>
+<span class="fc" id="L133">                                break;</span>
+                            case 2:
+<span class="fc" id="L135">                                sc.setMode(&quot;bicycling&quot;);</span>
+<span class="fc" id="L136">                                break;</span>
+                            case 3:
+<span class="fc" id="L138">                                sc.setMode(&quot;transit&quot;);</span>
+<span class="fc" id="L139">                                break;</span>
+                            default:
+<span class="nc" id="L141">                                System.out.println(&quot;ChoiceBox Error!&quot;);</span>
+                        }
+<span class="fc" id="L143">                    }</span>
+                }
+        );
+
+<span class="fc" id="L147">        recommendButton.setOnMouseClicked((new EventHandler&lt;MouseEvent&gt;() {</span>
+            @Override
+            public void handle(MouseEvent event) {
+<span class="fc" id="L150">                recommendation.getItems().clear();</span>
+<span class="fc" id="L151">                List&lt;String&gt; recommendations = Recommendation.getRecommendedSpots(&quot;trips&quot;,</span>
+<span class="fc" id="L152">                        AppInfo.getCurUsrName());</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                if (recommendations.isEmpty()){</span>
+<span class="nc" id="L154">                    System.out.println(&quot;No spots to recommend due to lack of users' data&quot;);</span>
+<span class="nc" id="L155">                    recommendation.getItems().add(&quot;No spots to recommend due to lack of users' data&quot;);</span>
+                }
+                else {
+<span class="fc" id="L158">                    System.out.println(&quot;Recommended spots: &quot; + recommendations);</span>
+<span class="fc" id="L159">                    recommendation.getItems().add(&quot;* Recommended spots *&quot;);</span>
+<span class="fc" id="L160">                    recommendation.getItems().addAll(recommendations);</span>
+                }
+<span class="fc" id="L162">            }</span>
+        }));
+<span class="fc" id="L164">    }</span>
+
+    @FXML
+    protected void handleButton1Action(ActionEvent event){
+<span class="fc" id="L168">    	spotInfo = &quot;&quot;;</span>
+<span class="fc" id="L169">        WebEngine webEngine = htmlGmap.getEngine();</span>
+<span class="fc" id="L170">    	spotInfo = (String) webEngine.executeScript(&quot;document.getElementById('status').innerHTML&quot;);</span>
+<span class="fc" id="L171">        spotLatLng = (String) webEngine.executeScript(&quot;document.getElementById('latlng').innerHTML&quot;);</span>
+<span class="fc" id="L172">        System.out.println(&quot;------------------&quot; + spotLatLng);</span>
+
+
+<span class="pc bpc" id="L175" title="1 of 4 branches missed.">        if ((!spotInfo.equals(&quot;&quot;)) &amp;&amp; (!spotLatLng.equals(&quot;&quot;))) {</span>
+<span class="fc" id="L176">            spotLatLng = spotLatLng.replace(&quot;(&quot;,&quot;&quot;);</span>
+<span class="fc" id="L177">            spotLatLng = spotLatLng.replace(&quot;)&quot;,&quot;&quot;);</span>
+<span class="fc" id="L178">            Double lat = Double.parseDouble(spotLatLng.split(&quot;,&quot;,0)[0]);</span>
+<span class="fc" id="L179">            Double lng = Double.parseDouble(spotLatLng.split(&quot;,&quot;,0)[1]);</span>
+<span class="pc bpc" id="L180" title="4 of 8 branches missed.">            if( lat &gt;= 40.495330 &amp;&amp; lat &lt;= 40.910691 &amp;&amp; lng &gt;= -74.265051 &amp;&amp; lng &lt;= -73.744805){</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                if (!listCompare.contains(spotInfo)){</span>
+<span class="fc" id="L182">                    sc.addSpot(spotInfo,spotLatLng);</span>
+<span class="fc" id="L183">                    listCompare.add(spotInfo);</span>
+<span class="fc" id="L184">                    list.getItems().add(spotInfo);</span>
+<span class="fc" id="L185">                    System.out.println(listCompare);</span>
+<span class="fc" id="L186">                    text.setText(&quot;New location added!&quot;);</span>
+
+
+                }
+                else{
+<span class="fc" id="L191">                    System.out.println(&quot;Repeated Location!&quot;);</span>
+<span class="fc" id="L192">                    text.setText(&quot;Repeated Location!&quot;);</span>
+                }
+
+            }else {
+<span class="nc" id="L196">                text.setText(&quot;The spot is outside of New York!&quot;);</span>
+<span class="nc" id="L197">                System.out.println(&quot;The spot is outside of New York!&quot;);</span>
+            }
+
+<span class="fc" id="L200">        }</span>
+        else {
+<span class="fc" id="L202">            System.out.println(&quot;No specific spot information found! \nPlease search again!&quot;);</span>
+<span class="fc" id="L203">            text.setText(&quot;No specific spot information found! \nPlease search again!&quot;);</span>
+        }
+<span class="fc" id="L205">        webEngine.executeScript(&quot;document.getElementById('status').innerHTML = '';&quot;);</span>
+<span class="fc" id="L206">    }</span>
+
+    @FXML
+    protected void handleDeleteAction(ActionEvent event){
+<span class="fc" id="L210">        spotInfo = &quot;&quot;;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        if (listCompare.isEmpty()){</span>
+<span class="fc" id="L212">            System.out.println(&quot;Spot List is Already Empty!&quot;);</span>
+<span class="fc" id="L213">            text.setText(&quot;Spot List is Already Empty!&quot;);</span>
+        }
+        else{
+<span class="fc" id="L216">            final int selectedIdx = list.getSelectionModel().getSelectedIndex();</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">            if (selectedIdx != -1){</span>
+<span class="nc" id="L218">                sc.deleteSpot(selectedIdx);</span>
+<span class="nc" id="L219">                listCompare.remove(selectedIdx);</span>
+                //System.out.println(listCompare);
+<span class="nc" id="L221">                list.getItems().remove(selectedIdx);</span>
+<span class="nc" id="L222">                text.setText(&quot;Delete the spot!&quot;);</span>
+            }
+
+        }
+<span class="fc" id="L226">    }</span>
+
+    @FXML
+    protected void handleButtonGenerateTripPlan(ActionEvent event){
+        //progress.setVisible(true);
+<span class="fc" id="L231">        list.getItems().clear();</span>
+<span class="fc" id="L232">        listCompare.clear();</span>
+
+
+        try{
+<span class="fc" id="L236">            sc.setNumSpots(sc.getSpots().size());</span>
+<span class="fc" id="L237">            sc.saveDistancesToMatrix();</span>
+
+<span class="fc" id="L239">            spotList = ShortestRoute.findNearestNeighbor(sc);</span>
+
+<span class="fc" id="L241">            list.getItems().addAll(spotList);</span>
+<span class="fc" id="L242">            text.setText(&quot;Success!&quot;);</span>
+            //progress.setVisible(false);
+<span class="fc" id="L244">            save.setVisible(true);</span>
+<span class="fc" id="L245">            sc.reset();</span>
+<span class="fc" id="L246">            add_location.setVisible(false);</span>
+<span class="fc" id="L247">            delete.setVisible(false);</span>
+<span class="fc" id="L248">            algorithm.setVisible(false);</span>
+<span class="fc" id="L249">            buttonGenerate.setVisible(false);</span>
+
+
+<span class="fc" id="L252">        }catch (Exception e){</span>
+
+<span class="fc" id="L254">            System.out.println(&quot;Can not generate the route!&quot;);</span>
+<span class="fc" id="L255">            text.setText(&quot;Can not generate the route!&quot;);</span>
+<span class="fc" id="L256">        }</span>
+
+<span class="fc" id="L258">    }</span>
+
+    @FXML
+    protected void handleButtonStart(ActionEvent event){
+<span class="fc" id="L262">        planpane.setVisible(true);</span>
+<span class="fc" id="L263">        add_location.setVisible(true);</span>
+<span class="fc" id="L264">        delete.setVisible(true);</span>
+<span class="fc" id="L265">        algorithm.setVisible(true);</span>
+<span class="fc" id="L266">        buttonGenerate.setVisible(true);</span>
+<span class="fc" id="L267">        save.setVisible(false);</span>
+<span class="fc" id="L268">        sc.reset();</span>
+<span class="fc" id="L269">        listCompare.clear();</span>
+<span class="fc" id="L270">        spotInfo = &quot;&quot;;</span>
+<span class="fc" id="L271">        text.setText(&quot;Please search spots in map.&quot;);</span>
+<span class="fc" id="L272">        list.getItems().clear();</span>
+<span class="fc" id="L273">    }</span>
+
+    @FXML
+    protected void handleButtonSave(ActionEvent e){
+<span class="fc" id="L277">        MongoCollection&lt;Document&gt; trips = DBClient.getCollectionByName(&quot;trips&quot;);</span>
+<span class="fc" id="L278">        String username = AppInfo.getCurUsrName();</span>
+<span class="fc" id="L279">        System.out.println(username);</span>
+        try {
+<span class="fc" id="L281">            Document trip = new Document(&quot;username&quot;, username).append(&quot;trip&quot;, spotList);</span>
+<span class="fc" id="L282">            trips.insertOne(trip);</span>
+<span class="fc" id="L283">            text.setText(&quot;Saved to database!&quot;);</span>
+<span class="fc" id="L284">            save.setVisible(false);</span>
+<span class="fc" id="L285">            plan_history.getItems().clear();</span>
+<span class="fc" id="L286">            history = DBClient.getDocuments(DBClient.getCollectionByName(&quot;trips&quot;),</span>
+<span class="fc" id="L287">                    AppInfo.getCurUsrName());</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            for(String each : history){</span>
+<span class="fc" id="L289">                plan_history.getItems().add(each);</span>
+<span class="fc" id="L290">            }</span>
+
+        }
+<span class="nc" id="L293">        catch (Exception ex) {</span>
+<span class="nc" id="L294">			System.out.println(ex.toString());</span>
+<span class="nc" id="L295">			text.setText(&quot;Can not save the plan!&quot;);</span>
+<span class="fc" id="L296">		}</span>
+<span class="fc" id="L297">    }</span>
+
+    @FXML
+    protected void handleButtonLogOut(ActionEvent event) throws IOException {
+        //progress.setVisible(true);
+<span class="fc" id="L302">        planpane.setVisible(false);</span>
+<span class="fc" id="L303">        sc.reset();</span>
+<span class="fc" id="L304">        listCompare.clear();</span>
+<span class="fc" id="L305">        spotInfo = &quot;&quot;;</span>
+<span class="fc" id="L306">        text.setText(&quot;&quot;);</span>
+<span class="fc" id="L307">        list.getItems().clear();</span>
+<span class="fc" id="L308">        Stage primaryStage = new Stage();</span>
+<span class="fc" id="L309">        LoginController lc = new LoginController();</span>
+<span class="fc" id="L310">        FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;login.fxml&quot;));</span>
+<span class="fc" id="L311">        loader.setController(lc);</span>
+<span class="fc" id="L312">        Parent root = loader.load();</span>
+
+<span class="fc" id="L314">        primaryStage.setTitle(&quot;TravelAssistant&quot;);</span>
+<span class="fc" id="L315">        primaryStage.setScene(new Scene(root));</span>
+<span class="fc" id="L316">        primaryStage.show();</span>
+
+<span class="fc" id="L318">        mainpane.getScene().getWindow().hide();</span>
+<span class="fc" id="L319">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
