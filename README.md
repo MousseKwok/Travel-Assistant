@@ -1,4 +1,4 @@
-# This project is co-developed by Xijie Guo, Yun Wang, Jerry Lin, Haoran, Geng
+#### This project is co-developed by Xijie Guo, Yun Wang, Jerry Lin, Haoran, Geng
 
 # Travel-Assistant
 
